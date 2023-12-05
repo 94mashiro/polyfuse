@@ -1,7 +1,8 @@
 {
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "simple-import-sort"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "simple-import-sort/imports": "error"
   },
   "overrides": [
     {
