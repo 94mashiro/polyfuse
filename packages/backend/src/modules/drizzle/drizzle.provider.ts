@@ -15,7 +15,7 @@ export const DrizzleProvider = {
   useFactory: (configService: ConfigService) => {
     neonConfig.fetchConnectionCache = true;
     const sql = neon(configService.get<string>('DATABASE_URL'));
-    const db = drizzle(sql);
+    const db = drizzle(sql, { schema });
     return db;
   },
 };

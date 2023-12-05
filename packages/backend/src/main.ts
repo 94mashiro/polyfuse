@@ -11,6 +11,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 
 import { AllExceptionsFilter } from './exceptions/all.exception.filter';
 import { HttpExceptionFilter } from './exceptions/http.exception.filter';
+import { PostInterceptor } from './interceptors/post.interceptor';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { AppModule } from './modules/module';
 
@@ -34,7 +35,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  app.useGlobalInterceptors(new TransformInterceptor());
+  app.useGlobalInterceptors(new TransformInterceptor(), new PostInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
   app.setGlobalPrefix('api');
 
