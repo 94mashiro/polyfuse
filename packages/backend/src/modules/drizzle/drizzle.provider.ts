@@ -7,7 +7,7 @@ import * as schema from './schema';
 
 export const DrizzleAsyncProvider = Symbol('DrizzleAsyncProvider');
 
-export type DrizzleDbType = NodePgDatabase<typeof schema>;
+export type DrizzleDB = NodePgDatabase<typeof schema>;
 
 export const DrizzleProvider = {
   provide: DrizzleAsyncProvider,
