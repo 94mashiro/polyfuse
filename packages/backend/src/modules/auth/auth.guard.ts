@@ -21,16 +21,15 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = this.extractTokenFromQuery(request);
     if (token !== this.configService.get<string>('API_TOKEN')) {
       throw new UnauthorizedException();
     }
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = (request.headers.authorization || '').split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+  private extractTokenFromQuery(request: Request): string | undefined {
+    return request.query.token as string | undefined;
   }
 }
 

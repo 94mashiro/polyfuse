@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 
-import { Public } from '@/modules/auth/auth.decorator';
 import { PolymorphicService } from '@/modules/worker/modules/polymorphic/polymorphic.service';
 
 import {
@@ -39,7 +38,6 @@ export class SubscriptionController {
   }
 
   @Get('download')
-  @Public()
   async getParsedSubscription(@Query() query: GetParsedSubscriptionDto) {
     const subscription = await this.subscriptionService.getSubscription(query.id);
     const subscriptionData = await this.subscriptionService.downloadSubscriptionData(subscription);
