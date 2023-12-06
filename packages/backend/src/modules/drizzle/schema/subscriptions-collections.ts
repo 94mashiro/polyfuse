@@ -7,10 +7,10 @@ import { subscriptions } from './subscription';
 export const subscriptionsToCollections = pgTable('subscriptions_to_collections', {
   subscriptionId: uuid('subscription_id')
     .notNull()
-    .references(() => subscriptions.id),
+    .references(() => subscriptions.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   collectionId: uuid('collection_id')
     .notNull()
-    .references(() => collections.id),
+    .references(() => collections.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 });
 
 export const subscriptionsToCollectionsRelations = relations(subscriptionsToCollections, ({ one }) => ({

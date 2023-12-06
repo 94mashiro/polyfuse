@@ -14,5 +14,5 @@ export const subscriptions = pgTable('subscription', {
 export type Subscription = typeof subscriptions.$inferSelect;
 
 export const subscriptionsRelations = relations(subscriptions, ({ many }) => ({
-  subscriptionsToCollections: many(subscriptionsToCollections),
+  collections: many(subscriptionsToCollections),
 }));
