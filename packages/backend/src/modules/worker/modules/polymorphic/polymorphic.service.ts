@@ -1,15 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { stringify } from 'yaml';
 
-import { ClashPolicy, QuantumultXPolicy, SurgePolicy } from '@/types/client';
+import { ClashPolicy, Client, QuantumultXPolicy, SurgePolicy } from '@/types/client';
 import { Node, NodeProtocol, ShadowsocksNode } from '@/types/node';
+import { SubscriptionProtocol } from '@/types/subscription';
 import { getQuantumultXPolicyString, getSurgePolicyString } from '@/utils/policy';
 
 @Injectable()
 export class PolymorphicService {
   constructor() {}
 
-  parseGeneric(data: string): ShadowsocksNode[] {
+  parseSubscription(params: { data: string; protocol: SubscriptionProtocol }) {
+    if (params.protocol === SubscriptionProtocol.Shadowsocks) {
+      return this.parseShadowsocks(params.data);
+    }
+    throw new HttpException('Unsupported subscription protocol', 400);
+  }
+
+  generatePolicy(params: { nodes: Node[]; client: Client }) {
+    if (params.client === Client.QuantumultX) {
+      return this.generateQuantumultX(params.nodes);
+    }
+    if (params.client === Client.Surge) {
+      return this.generateSurge(params.nodes);
+    }
+    if (params.client === Client.Clash) {
+      return this.generateClash(params.nodes);
+    }
+    throw new HttpException('Unsupported client', 400);
+  }
+
+  parseShadowsocks(data: string): ShadowsocksNode[] {
     const decodedUriList = decodeURIComponent(atob(data)).split('\r\n');
     const parseUri = (uri: string) => {
       // 根据 ss 协议的模式，解析出各个部分

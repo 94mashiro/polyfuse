@@ -12,20 +12,7 @@ export class CreateSubscriptionDto {
   userAgent?: string;
 }
 
-export class ParseSubscriptionDto {
-  @IsString()
-  id: string;
-
-  @IsString()
-  client: string;
-}
-
 export class GetSubscriptionMetadataDto {
-  @IsString()
-  id: string;
-}
-
-export class GetParsedSubscriptionDto {
   @IsString()
   id: string;
 }

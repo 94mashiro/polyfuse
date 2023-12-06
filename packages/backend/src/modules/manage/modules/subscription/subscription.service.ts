@@ -4,6 +4,8 @@ import axios from 'axios';
 import { DrizzleAsyncProvider, DrizzleDB } from '@/modules/drizzle/drizzle.provider';
 import { subscriptions } from '@/modules/drizzle/schema';
 import { Client } from '@/types/client';
+import { SubscriptionProtocol } from '@/types/subscription';
+import { isBase64String } from '@/utils/base64';
 import { getClientUserAgent } from '@/utils/client';
 import { parseSubscriptionRawMetadata } from '@/utils/subscription-metadata';
 
@@ -40,14 +42,14 @@ export class SubscriptionService {
     return parseSubscriptionRawMetadata(rawMetadata);
   }
 
-  async parseSubscription(params: { id: string; client: string }) {
+  async getSubscriptionContent(params: { id: string }) {
     const subscription = await this.getSubscription(params.id);
     if (!subscription) {
       throw new HttpException('Subscription not found', 400);
     }
     const { url, userAgent } = subscription;
     return axios
-      .get(url, {
+      .get<string>(url, {
         headers: {
           'User-Agent': userAgent,
         },
@@ -63,5 +65,12 @@ export class SubscriptionService {
         },
       })
       .then(res => res.data);
+  }
+
+  getSubscriptionProtocol(data: string) {
+    if (isBase64String(data)) {
+      return SubscriptionProtocol.Shadowsocks;
+    }
+    throw new HttpException('Unsupported subscription protocol', 400);
   }
 }
