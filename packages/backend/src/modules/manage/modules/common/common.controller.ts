@@ -1,7 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 
-import packageJson from '../../../package.json';
-import { Public } from '../auth/auth.decorator';
+import { Public } from '@/modules/auth/auth.decorator';
+
+import packageJson from '../../../../../package.json';
 
 @Controller('common')
 export class CommonController {

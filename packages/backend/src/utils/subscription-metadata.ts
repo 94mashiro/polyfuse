@@ -1,5 +1,7 @@
-export const parseSubscriptionRawMetadata = (rawData: string) => {
-  const metadata = {
+import { SubscriptionMetadata } from '../types/metadata';
+
+export const parseSubscriptionRawMetadata = (rawData: string): SubscriptionMetadata => {
+  const metadata: SubscriptionMetadata = {
     upload: null,
     download: null,
     total: null,

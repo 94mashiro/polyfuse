@@ -1,9 +1,12 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-import { parseSubscriptionRawMetadata } from '../../utils/subscription-metadata';
-import { DrizzleAsyncProvider, DrizzleDB } from '../drizzle/drizzle.provider';
-import { subscriptions } from '../drizzle/schema';
+import { DrizzleAsyncProvider, DrizzleDB } from '@/modules/drizzle/drizzle.provider';
+import { subscriptions } from '@/modules/drizzle/schema';
+import { Client } from '@/types/client';
+import { getClientUserAgent } from '@/utils/client';
+import { parseSubscriptionRawMetadata } from '@/utils/subscription-metadata';
+
 import { CreateSubscriptionDto } from './subscription.dto';
 
 @Injectable()
@@ -30,7 +33,7 @@ export class SubscriptionService {
     const { url } = subscription;
     const { headers } = await axios.get(url, {
       headers: {
-        'User-Agent': 'Quantumult X/1.0.8 (iPhone; iOS 14.4.2; Scale/3.00)',
+        'User-Agent': getClientUserAgent(Client.QuantumultX),
       },
     });
     const rawMetadata = headers['subscription-userinfo'];
@@ -43,18 +46,22 @@ export class SubscriptionService {
       throw new HttpException('Subscription not found', 400);
     }
     const { url, userAgent } = subscription;
-    console.log(url, {
-      'User-Agent': userAgent,
-    });
     return axios
       .get(url, {
         headers: {
           'User-Agent': userAgent,
         },
       })
-      .then(res => {
-        console.log(res.headers);
-        return res.headers['subscription-userinfo'];
-      });
+      .then(res => res.data);
+  }
+
+  async downloadSubscriptionData(params: { url: string; userAgent?: string }) {
+    return axios
+      .get(params.url, {
+        headers: {
+          'User-Agent': params.userAgent,
+        },
+      })
+      .then(res => res.data);
   }
 }
