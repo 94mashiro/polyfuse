@@ -1,4 +1,4 @@
-import { QuantumultXPolicy } from '../types/client';
+import { QuantumultXPolicy, SurgePolicy } from '../types/client';
 
 export const getQuantumultXPolicyString = (data: QuantumultXPolicy) => {
   const policyPairs = [];
@@ -7,5 +7,16 @@ export const getQuantumultXPolicyString = (data: QuantumultXPolicy) => {
   policyPairs.push(`password=${data.password}`);
   policyPairs.push(`udp-relay=${data.udpRelay}`);
   policyPairs.push(`tag=${data.tag}`);
+  return policyPairs.join(',');
+};
+
+export const getSurgePolicyString = (data: SurgePolicy) => {
+  const policyPairs = [];
+  policyPairs.push(`${data.tag}=${data.protocol}`);
+  policyPairs.push(data.host);
+  policyPairs.push(data.port);
+  policyPairs.push(`encrypt-method=${data.method}`);
+  policyPairs.push(`password=${data.password}`);
+  policyPairs.push(`udp-relay=${data.udpRelay}`);
   return policyPairs.join(',');
 };
