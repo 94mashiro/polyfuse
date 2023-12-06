@@ -1,4 +1,7 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+
+import { subscriptionsToCollections } from './subscriptions-collections';
 
 export const subscriptions = pgTable('subscription', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -9,3 +12,7 @@ export const subscriptions = pgTable('subscription', {
 });
 
 export type Subscription = typeof subscriptions.$inferSelect;
+
+export const subscriptionsRelations = relations(subscriptions, ({ many }) => ({
+  subscriptionsToCollections: many(subscriptionsToCollections),
+}));

@@ -15,6 +15,13 @@
       "when": 1701872380061,
       "tag": "0001_chief_gideon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1701874805135,
+      "tag": "0002_slim_thor",
+      "breakpoints": true
     }
   ]
 }
