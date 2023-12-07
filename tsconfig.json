@@ -1,4 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@tsconfig/node18/tsconfig.json"
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "exclude": ["dist/**/*", "node_modules/**/*"]
 }
