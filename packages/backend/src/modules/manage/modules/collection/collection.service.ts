@@ -10,7 +10,12 @@ export class CollectionService {
   listCollections() {
     return this.db.query.collections.findMany({
       with: {
-        subscriptions: true,
+        subscriptions: {
+          columns: {},
+          with: {
+            subscription: true,
+          },
+        },
       },
     });
   }
@@ -22,6 +27,7 @@ export class CollectionService {
         name: params.name,
       })
       .returning();
+    // TODO: 加一个对 subIds 的校验
     await this.db.insert(subscriptionsToCollections).values(
       params.subIds.map(subId => ({
         collectionId: insertCollection[0].id,
