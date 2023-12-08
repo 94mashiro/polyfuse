@@ -5,20 +5,29 @@
   "type": "module",
   "scripts": {
     "build": "vue-tsc && vite build",
-    "dev": "vite",
+    "dev": "vite --host",
     "preview": "vite preview"
   },
   "dependencies": {
     "@vant/touch-emulator": "^1.4.0",
+    "@vueuse/core": "^10.7.0",
+    "axios": "^1.6.2",
+    "lodash": "^4.17.21",
+    "pinia": "^2.1.7",
     "vant": "^4.8.0",
-    "vue": "^3.3.10"
+    "vue": "^3.3.10",
+    "vue-request": "^2.0.4",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.21.0",
     "@html-eslint/parser": "^0.21.0",
     "@iconify/json": "^2.2.153",
+    "@types/lodash": "^4.14.202",
     "@unocss/eslint-config": "^0.58.0",
     "@unocss/preset-icons": "^0.58.0",
+    "@unocss/preset-mini": "^0.58.0",
+    "@unocss/transformer-directives": "^0.58.0",
     "@vant/auto-import-resolver": "^1.0.2",
     "@vitejs/plugin-vue": "^4.5.1",
     "eslint-plugin-prettier-vue": "^5.0.0",

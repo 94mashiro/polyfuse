@@ -1,3 +1,4 @@
 {
-  "unocss.root": "packages/frontend"
+  "unocss.root": "packages/frontend",
+  "scss.lint.unknownAtRules": "ignore"
 }
