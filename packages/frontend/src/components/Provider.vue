@@ -1,6 +1,6 @@
 <template>
   <van-config-provider
-    class="relative flex h-full w-full flex-col"
+    class="relative flex h-full w-full flex-col font-sans antialiased"
     :theme-vars="themeVars"
     theme-vars-scope="global"
     :theme="isDark ? 'dark' : 'light'"

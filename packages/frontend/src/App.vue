@@ -13,6 +13,6 @@ import Provider from './components/Provider.vue';
 
 <style lang="scss">
 html {
-  @apply @dark:bg-zinc-950 @dark:text-zinc-100 bg-zinc-100 text-zinc-950;
+  @apply bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-100;
 }
 </style>

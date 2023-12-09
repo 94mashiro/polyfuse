@@ -1,5 +1,5 @@
 <template>
-  <van-cell class="item" center :title="item.name" :label="metadataInfo">
+  <van-cell class="item" center :title="item.name">
     <template #label>
       <div class="text-xs">
         <div v-if="loading">加载中...</div>
@@ -18,7 +18,7 @@
     <template #value>
       <div class="flex w-full justify-end gap-2">
         <PolicyOutputSheet :id="item.id" />
-        <div class="i-mdi:pencil" />
+        <div class="i-mdi:pencil" @click="handleNavEditPage" />
       </div>
     </template>
   </van-cell>
@@ -29,6 +29,7 @@ import byteSize from 'byte-size';
 import { format } from 'date-fns';
 import { computed, PropType } from 'vue';
 import { useRequest } from 'vue-request';
+import { useRouter } from 'vue-router';
 
 import { getSubscriptionMetadata } from '../apis/subscription';
 import { Subscription } from '../types/subscription';
@@ -40,6 +41,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const router = useRouter();
 
 const { data: metadata, loading } = useRequest(() => getSubscriptionMetadata({ id: props.item.id }));
 
@@ -61,12 +64,14 @@ const metadataInfo = computed(() => {
     expire,
   };
 });
+
+const handleNavEditPage = () => {
+  router.replace(`/subscription/edit/${props.item.id}`);
+};
 </script>
 
-<style lang="scss" scoped>
-.item {
-  :global(.van-cell__title) {
-    flex: 2 !important;
-  }
+<style scoped lang="scss">
+.item:deep(.van-cell__title) {
+  flex: 2 !important;
 }
 </style>

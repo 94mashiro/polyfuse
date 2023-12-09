@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 
-import { CreateSubscriptionDto, GetSubscriptionMetadataDto } from './subscription.dto';
+import { CreateSubscriptionDto, GetSubscriptionDetailDto, GetSubscriptionMetadataDto } from './subscription.dto';
 import { SubscriptionService } from './subscription.service';
 
 @Controller('subscription')
@@ -10,6 +10,11 @@ export class SubscriptionController {
   @Get('list')
   async listSubscriptions() {
     return this.subscriptionService.listSubscriptions();
+  }
+
+  @Get('detail')
+  async getSubscriptionDetail(@Query() query: GetSubscriptionDetailDto) {
+    return this.subscriptionService.getSubscription(query.id);
   }
 
   @Post('create')

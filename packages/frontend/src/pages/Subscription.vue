@@ -1,19 +1,8 @@
 <template>
   <SubscriptionList />
-  <van-floating-bubble axis="lock" :offset="bubblePosition">
-    <div class="i-mdi:plus text-2xl" />
-  </van-floating-bubble>
+  <SubscriptionCreateSheet />
 </template>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import { reactive } from 'vue';
-
 import SubscriptionList from '../components/SubscriptionList.vue';
-
-const windowSize = useWindowSize();
-const bubblePosition = reactive({
-  x: windowSize.width.value - 60,
-  y: windowSize.height.value - 110,
-});
 </script>

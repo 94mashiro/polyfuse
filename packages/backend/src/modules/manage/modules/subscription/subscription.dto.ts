@@ -16,3 +16,8 @@ export class GetSubscriptionMetadataDto {
   @IsString()
   id: string;
 }
+
+export class GetSubscriptionDetailDto {
+  @IsString()
+  id: string;
+}
