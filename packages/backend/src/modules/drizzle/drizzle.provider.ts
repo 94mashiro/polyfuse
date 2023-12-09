@@ -1,7 +1,6 @@
-import { neon, neonConfig } from '@neondatabase/serverless';
 import { ConfigService } from '@nestjs/config';
-import { drizzle } from 'drizzle-orm/neon-http';
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 
 import * as schema from './schema';
 
@@ -13,9 +12,9 @@ export const DrizzleProvider = {
   provide: DrizzleAsyncProvider,
   inject: [ConfigService],
   useFactory: (configService: ConfigService) => {
-    neonConfig.fetchConnectionCache = true;
-    const sql = neon(configService.get<string>('DATABASE_URL'));
-    const db = drizzle(sql, { schema });
-    return db;
+    const sql = new Pool({
+      connectionString: configService.get<string>('DATABASE_URL'),
+    });
+    return drizzle(sql, { schema });
   },
 };

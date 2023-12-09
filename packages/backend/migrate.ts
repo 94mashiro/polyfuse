@@ -2,15 +2,16 @@ import 'dotenv/config';
 
 import path from 'node:path';
 
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { migrate } from 'drizzle-orm/neon-http/migrator';
-
-const connectionString = process.env.DATABASE_URL;
-const sql = neon(connectionString);
-const db = drizzle(sql);
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import { Pool } from 'pg';
 
 (async () => {
+  const connectionString = process.env.DATABASE_URL;
+  const sql = new Pool({
+    connectionString,
+  });
+  const db = drizzle(sql);
   await migrate(db, {
     migrationsFolder: path.resolve(__dirname, './drizzle/migrations'),
   });
