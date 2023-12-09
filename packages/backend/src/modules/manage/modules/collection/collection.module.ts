@@ -9,5 +9,6 @@ import { CollectionService } from './collection.service';
   imports: [DrizzleModule],
   controllers: [CollectionController],
   providers: [CollectionService],
+  exports: [CollectionService],
 })
 export class CollectionModule {}

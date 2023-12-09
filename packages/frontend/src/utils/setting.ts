@@ -24,7 +24,6 @@ export const setServerEndpointSetting = (setting: ServerEndpointSetting) => {
   if (!setting.url.startsWith(clientProtocol)) {
     setting.url = clientProtocol + '//' + setting.url;
   }
-  console.log(setting);
   const payload = JSON.stringify(setting);
   window.localStorage.setItem('Polyfuze:ServerEndpointSetting', payload);
 };

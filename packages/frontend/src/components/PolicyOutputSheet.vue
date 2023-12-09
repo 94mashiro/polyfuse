@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import clipboardy from 'clipboardy';
 import { showNotify } from 'vant';
-import { ref } from 'vue';
+import { PropType, ref } from 'vue';
 
 import { generatePolicyOutputUrl } from '../utils/policy';
 
@@ -20,6 +20,10 @@ const props = defineProps({
   id: {
     type: String,
     required: true,
+  },
+  type: {
+    type: String as PropType<'subscription' | 'collection'>,
+    default: 'subscription',
   },
 });
 
@@ -62,6 +66,7 @@ const handleSelect = async (option: ShareOption) => {
   const policyUrl = generatePolicyOutputUrl({
     id: props.id,
     client: option.client,
+    type: props.type,
   });
   try {
     await clipboardy.write(policyUrl);
