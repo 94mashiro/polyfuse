@@ -8,7 +8,7 @@
     <template #value>
       <div class="flex w-full justify-end gap-2">
         <PolicyOutputSheet :id="item.id" />
-        <div class="i-mdi:pencil" />
+        <div class="i-mdi:pencil" @click="handleNavEditPage" />
       </div>
     </template>
   </van-cell>
@@ -16,9 +16,12 @@
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { Collection } from '../types/collection.ts';
 import PolicyOutputSheet from './PolicyOutputSheet.vue';
+
+const router = useRouter();
 
 const props = defineProps({
   item: {
@@ -31,6 +34,10 @@ const metadataInfo = computed(() => {
   const { subscriptions } = props.item;
   return subscriptions.map(item => item.subscription.name).join(', ');
 });
+
+const handleNavEditPage = () => {
+  router.replace(`/collection/edit/${props.item.id}`);
+};
 </script>
 
 <style scoped lang="scss">

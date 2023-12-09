@@ -7,3 +7,19 @@ export class CreateCollectionDto {
   @IsArray()
   subIds: string[];
 }
+
+export class GetCollectionDetailDto {
+  @IsString()
+  id: string;
+}
+
+export class UpdateCollectionDto {
+  @IsString()
+  id: string;
+
+  @IsString()
+  name: string;
+
+  @IsArray()
+  subIds: string[];
+}

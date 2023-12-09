@@ -12,6 +12,7 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 import App from './App.vue';
+import CollectionEditPage from './pages/CollectionEdit.vue';
 import RulePage from './pages/Rule.vue';
 import SettingPage from './pages/Setting.vue';
 import ServerEndpointPage from './pages/setting/ServerEndpoint.vue';
@@ -31,6 +32,18 @@ const routes: RouteRecordRaw[] = [
     component: SubscriptionEditPage,
     name: 'SubscriptionEditPage',
     meta: { name: '编辑订阅', showBottomMenu: false, backPath: '/' },
+  },
+  {
+    path: '/collection/create',
+    component: CollectionEditPage,
+    name: 'CollectionCreatePage',
+    meta: { name: '新建订阅组', showBottomMenu: false, backPath: '/' },
+  },
+  {
+    path: '/collection/edit/:id',
+    component: CollectionEditPage,
+    name: 'CollectionEditPage',
+    meta: { name: '编辑订阅组', showBottomMenu: false, backPath: '/' },
   },
   { path: '/rule', component: RulePage, meta: { name: '分流', showBottomMenu: true } },
   {

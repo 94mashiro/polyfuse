@@ -39,7 +39,7 @@ const handleSelectAction = (action: SheetAction) => {
       router.push('/subscription/create');
     }
     if (action.name === '订阅组') {
-      router.push('/subscription-group/create');
+      router.push('/collection/create');
     }
   } finally {
     isSheetVisible.value = false;

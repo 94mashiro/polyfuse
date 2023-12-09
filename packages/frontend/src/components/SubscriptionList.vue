@@ -23,6 +23,7 @@ import { getCollectionList } from '../apis/collection.ts';
 import { getSubscriptionList } from '../apis/subscription';
 import CollectionItem from './CollectionItem.vue';
 import SubscriptionItem from './SubscriptionItem.vue';
+
 const { data: subList, loading: loadingSubscription } = useRequest(getSubscriptionList);
 const { data: collectionList, loading: loadingCollection } = useRequest(getCollectionList);
 </script>
