@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 interface SheetAction {
@@ -24,10 +24,10 @@ interface SheetAction {
 const router = useRouter();
 const windowSize = useWindowSize();
 
-const bubblePosition = reactive({
+const bubblePosition = computed(() => ({
   x: windowSize.width.value - 60,
   y: windowSize.height.value - 110,
-});
+}));
 
 const isSheetVisible = ref<boolean>(false);
 
