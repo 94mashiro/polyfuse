@@ -11,7 +11,7 @@ export const parseSubscriptionRawMetadata = (rawData: string): SubscriptionMetad
     const dataPairs = rawData.split('; ').map(pair => pair.split('='));
     dataPairs.forEach(data => {
       const [key, value] = data;
-      metadata[key] = value;
+      metadata[key] = Number(value);
     });
   } finally {
     return metadata;

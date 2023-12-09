@@ -39,7 +39,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
   app.setGlobalPrefix('api');
 
-  await app.listen(process.env.PORT || 3001);
+  await app.listen(process.env.PORT || 3001, '0.0.0.0');
 }
 bootstrap().catch(() => {
   fs.writeFileSync('graph.json', PartialGraphHost.toString() ?? '');

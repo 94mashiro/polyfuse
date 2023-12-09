@@ -1,16 +1,26 @@
 <template>
-  <van-config-provider :theme-vars="themeVars" theme-vars-scope="global" :theme="isDark ? 'dark' : 'light'">
-    <NavBar />
-    <EndpointSettingNotice />
-    <div class="mx-auto max-w-xl py-4">
-      <slot />
-      <BottomMenu v-if="route.meta.showBottomMenu" />
+  <van-config-provider
+    class="relative flex h-full w-full flex-col"
+    :theme-vars="themeVars"
+    theme-vars-scope="global"
+    :theme="isDark ? 'dark' : 'light'"
+  >
+    <div class="z-100 sticky top-0">
+      <NavBar />
+      <EndpointSettingNotice />
     </div>
+    <div
+      :class="twMerge('mx-auto w-full max-w-xl overflow-y-auto py-4', (route.meta.showBottomMenu as boolean) && 'pb-20')"
+    >
+      <slot />
+    </div>
+    <BottomMenu v-if="route.meta.showBottomMenu" />
   </van-config-provider>
 </template>
 
 <script setup lang="ts">
 import { usePreferredDark } from '@vueuse/core';
+import { twMerge } from 'tailwind-merge';
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 

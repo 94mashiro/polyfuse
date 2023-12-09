@@ -1,5 +1,9 @@
 import '@vant/touch-emulator';
 import 'virtual:uno.css';
+import 'vant/es/toast/style';
+import 'vant/es/dialog/style';
+import 'vant/es/notify/style';
+import 'vant/es/image-preview/style';
 
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
@@ -36,4 +40,5 @@ const app = createApp(App);
 
 app.use(router);
 app.use(pinia);
+
 app.mount('#app');
