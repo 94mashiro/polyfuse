@@ -5,7 +5,7 @@ import { getServerEndpointSetting } from './setting';
 
 const client = axios.create({
   validateStatus: () => true,
-  timeout: 3000,
+  timeout: 30000,
 });
 
 interface BaseResponse<T> {

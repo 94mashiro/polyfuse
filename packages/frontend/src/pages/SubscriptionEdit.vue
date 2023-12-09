@@ -19,8 +19,15 @@
       />
       <van-field v-model="formState.userAgent" :disabled="loadingGetSubscriptionDetail" label="自定义 UA：" />
     </van-cell-group>
-    <div class="mt-4 px-4">
-      <van-button round block type="primary" native-type="submit" :loading="loadingCreateSubscription">提交</van-button>
+    <div class="mt-8 px-4">
+      <van-button
+        round
+        block
+        type="primary"
+        native-type="submit"
+        :loading="loadingCreateSubscription || loadingUpdateSubscription"
+        >提交</van-button
+      >
     </div>
   </van-form>
 </template>
@@ -31,12 +38,15 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRequest } from 'vue-request';
 import { useRoute, useRouter } from 'vue-router';
 
-import { createSubscription, getSubscriptionDetail } from '../apis/subscription';
+import { createSubscription, getSubscriptionDetail, updateSubscription } from '../apis/subscription';
 
 const route = useRoute();
 const router = useRouter();
 
 const { runAsync: startCreateSubscription, loading: loadingCreateSubscription } = useRequest(createSubscription, {
+  manual: true,
+});
+const { runAsync: startUpdateSubscription, loading: loadingUpdateSubscription } = useRequest(updateSubscription, {
   manual: true,
 });
 const { runAsync: startGetSubscriptionDetail, loading: loadingGetSubscriptionDetail } = useRequest(
@@ -56,6 +66,14 @@ const isEditMode = computed(() => route.name === 'SubscriptionEditPage');
 
 const handleSubmit = async () => {
   if (isEditMode.value) {
+    await startUpdateSubscription({
+      id: route.params.id as string,
+      name: formState.name,
+      url: formState.url,
+      userAgent: formState.userAgent,
+    });
+    showNotify({ message: '更新订阅成功', type: 'success' });
+    await router.replace('/');
     return;
   }
   await startCreateSubscription(formState);

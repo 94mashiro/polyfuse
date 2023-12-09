@@ -13,7 +13,14 @@
     </van-cell-group>
     <SubscriptionCellCheckbox v-model="formState.subIds" />
     <div class="mt-8 px-4">
-      <van-button round block type="primary" native-type="submit" :loading="loadingCreateCollection">提交</van-button>
+      <van-button
+        round
+        block
+        type="primary"
+        native-type="submit"
+        :loading="loadingCreateCollection || loadingUpdateCollection"
+        >提交</van-button
+      >
     </div>
   </van-form>
 </template>

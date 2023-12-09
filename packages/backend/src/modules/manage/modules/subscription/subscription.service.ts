@@ -1,5 +1,6 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { eq } from 'drizzle-orm';
 
 import { DrizzleAsyncProvider, DrizzleDB } from '@/modules/drizzle/drizzle.provider';
 import { subscriptions } from '@/modules/drizzle/schema';
@@ -72,5 +73,16 @@ export class SubscriptionService {
       return SubscriptionProtocol.Shadowsocks;
     }
     throw new HttpException('Unsupported subscription protocol', 400);
+  }
+
+  async updateSubscription(params: { id: string; name: string; url: string; userAgent?: string }) {
+    await this.db
+      .update(subscriptions)
+      .set({
+        name: params.name,
+        url: params.url,
+        userAgent: params.url,
+      })
+      .where(eq(subscriptions.id, params.id));
   }
 }

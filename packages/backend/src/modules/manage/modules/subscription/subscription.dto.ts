@@ -21,3 +21,18 @@ export class GetSubscriptionDetailDto {
   @IsString()
   id: string;
 }
+
+export class UpdateSubscriptionDto {
+  @IsString()
+  id: string;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  url: string;
+
+  @IsString()
+  @IsOptional()
+  userAgent?: string;
+}
