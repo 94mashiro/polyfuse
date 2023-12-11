@@ -1,5 +1,9 @@
 <template>
-  <van-nav-bar :title="route.meta.name ?? '标题'" :left-arrow="route.meta.backPath" @click-left="handleNavBack" />
+  <van-nav-bar
+    :title="(route.meta.name as string) ?? '标题'"
+    :left-arrow="Boolean(route.meta.backPath)"
+    @click-left="handleNavBack"
+  />
 </template>
 
 <script setup lang="ts">
