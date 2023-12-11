@@ -8,11 +8,10 @@ import { PropType } from 'vue';
 
 import { deleteCollection } from '../apis/collection.ts';
 import { deleteSubscription } from '../apis/subscription.ts';
-import { useCollectionStore } from '../stores/collection.ts';
-import { useSubscriptionStore } from '../stores/subscription.ts';
 
-const subscriptionStore = useSubscriptionStore();
-const collectionStore = useCollectionStore();
+const emits = defineEmits<{
+  delete: [id: string];
+}>();
 
 const props = defineProps({
   id: {
@@ -36,7 +35,7 @@ const handleClick = async () => {
       await deleteCollection({ id: props.id });
     }
   } finally {
-    await Promise.all([subscriptionStore.update(), collectionStore.update()]);
+    emits('delete', props.id);
   }
 };
 </script>

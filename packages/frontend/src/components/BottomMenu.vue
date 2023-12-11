@@ -6,16 +6,16 @@
         <div class="i-carbon:edge-node-alt icon" />
       </template>
     </van-tabbar-item>
-    <van-tabbar-item icon="search" replace to="/rule">
-      <span>分流</span>
-      <template #icon>
-        <div class="i-mdi:script-text-outline icon" />
-      </template>
-    </van-tabbar-item>
+    <!--    <van-tabbar-item icon="search" replace to="/rule">-->
+    <!--      <span>分流</span>-->
+    <!--      <template #icon>-->
+    <!--        <div class="i-mdi:script-text-outline icon" />-->
+    <!--      </template>-->
+    <!--    </van-tabbar-item>-->
     <van-tabbar-item icon="search" replace to="/setting">
       <span>设置</span>
       <template #icon>
-        <div class="i-mdi:cog icon" />
+        <div class="icon i-mdi:cog" />
       </template>
     </van-tabbar-item>
   </van-tabbar>

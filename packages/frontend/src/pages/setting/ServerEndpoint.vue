@@ -19,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
+import { showNotify } from 'vant';
 import { onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useUpdateVersion } from '../../hooks/useUpdateVersion';
 import { useAppStore } from '../../stores/app';
@@ -28,13 +30,16 @@ import { getServerEndpointSetting, setServerEndpointSetting } from '../../utils/
 const appStore = useAppStore();
 const endpointSetting = reactive(getServerEndpointSetting());
 const { loading, update } = useUpdateVersion();
+const router = useRouter();
 
 const handleSubmit = async () => {
   setServerEndpointSetting({
     url: endpointSetting.url,
     token: endpointSetting.token,
   });
+  await router.replace('/setting');
   await update();
+  showNotify({ message: '编辑服务端配置成功', type: 'success' });
 };
 
 onMounted(() => {

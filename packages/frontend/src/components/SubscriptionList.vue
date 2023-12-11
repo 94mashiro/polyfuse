@@ -1,39 +1,50 @@
 <template>
   <van-cell-group title="订阅列表" inset>
-    <van-skeleton v-if="subscriptionStore.loadingSubscriptions" class="my-6" title :row="3" />
+    <van-skeleton v-if="loadingSubscriptions && !subscriptions?.length" class="my-6" title :row="3" />
     <van-empty
-      v-else-if="!subscriptionStore.subscriptions?.length"
+      v-else-if="isFetchSubsError"
       image="error"
       :image-size="64"
-      description="暂无订阅信息，请添加"
+      description="获取订阅信息失败，请检查服务端配置"
     />
-    <SubscriptionItem v-for="item in subscriptionStore.subscriptions" v-else :key="item.id" :item="item" />
+    <van-empty v-else-if="!subscriptions?.length" image="error" :image-size="64" description="暂无订阅信息，请添加" />
+    <SubscriptionItem v-for="item in subscriptions" v-else :key="item.id" :item="item" @delete="refreshSubscriptions" />
   </van-cell-group>
   <van-cell-group title="订阅组列表" inset>
-    <van-skeleton v-if="collectionStore.loadingCollections" class="my-6" title :row="3" />
+    <van-skeleton v-if="loadingCollections && !collections?.length" class="my-6" title :row="3" />
     <van-empty
-      v-else-if="!collectionStore.collections.length"
+      v-else-if="isFetchCollectionsError"
       image="error"
       :image-size="64"
-      description="暂无订阅组信息，请添加"
+      description="获取订阅组信息失败，请检查服务端配置"
     />
-    <CollectionItem v-for="item in collectionStore.collections" v-else :key="item.id" :item="item" />
+    <van-empty v-else-if="!collections?.length" image="error" :image-size="64" description="暂无订阅组信息，请添加" />
+    <CollectionItem v-for="item in collections" v-else :key="item.id" :item="item" @delete="refreshCollections" />
   </van-cell-group>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { useRequest } from 'vue-request';
 
-import { useCollectionStore } from '../stores/collection.ts';
-import { useSubscriptionStore } from '../stores/subscription.ts';
+import { getCollectionList } from '../apis/collection.ts';
+import { getSubscriptionList } from '../apis/subscription.ts';
 import CollectionItem from './CollectionItem.vue';
 import SubscriptionItem from './SubscriptionItem.vue';
 
-const subscriptionStore = useSubscriptionStore();
-const collectionStore = useCollectionStore();
-
-onMounted(() => {
-  subscriptionStore.update();
-  collectionStore.update();
+const {
+  data: subscriptions,
+  loading: loadingSubscriptions,
+  error: isFetchSubsError,
+  refreshAsync: refreshSubscriptions,
+} = useRequest(getSubscriptionList, {
+  cacheKey: 'subscriptionList',
+});
+const {
+  data: collections,
+  loading: loadingCollections,
+  error: isFetchCollectionsError,
+  refreshAsync: refreshCollections,
+} = useRequest(getCollectionList, {
+  cacheKey: 'collectionList',
 });
 </script>

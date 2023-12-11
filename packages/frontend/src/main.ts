@@ -12,12 +12,12 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 import App from './App.vue';
-import CollectionEditPage from './pages/CollectionEdit.vue';
 import RulePage from './pages/Rule.vue';
 import SettingPage from './pages/Setting.vue';
 import ServerEndpointPage from './pages/setting/ServerEndpoint.vue';
 import SubscriptionPage from './pages/Subscription.vue';
-import SubscriptionEditPage from './pages/SubscriptionEdit.vue';
+import CollectionEditPage from './pages/subscription/CollectionEdit.vue';
+import SubscriptionEditPage from './pages/subscription/SubscriptionEdit.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', component: SubscriptionPage, meta: { name: '订阅', showBottomMenu: true } },

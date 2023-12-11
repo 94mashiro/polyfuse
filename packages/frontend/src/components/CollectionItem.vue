@@ -9,7 +9,7 @@
       <div class="flex w-full justify-end gap-2">
         <PolicyOutputSheet :id="item.id" type="collection" />
         <div class="i-mdi:pencil" @click="handleNavEditPage" />
-        <SubscriptionDeleteDialog :id="item.id" type="collection" />
+        <SubscriptionDeleteDialog :id="item.id" type="collection" @delete="id => emits('delete', id)" />
       </div>
     </template>
   </van-cell>
@@ -21,8 +21,13 @@ import { useRouter } from 'vue-router';
 
 import { Collection } from '../types/collection.ts';
 import PolicyOutputSheet from './PolicyOutputSheet.vue';
+import SubscriptionDeleteDialog from './SubscriptionDeleteDialog.vue';
 
 const router = useRouter();
+
+const emits = defineEmits<{
+  delete: [id: string];
+}>();
 
 const props = defineProps({
   item: {

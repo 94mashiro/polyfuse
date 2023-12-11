@@ -39,13 +39,10 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRequest } from 'vue-request';
 import { useRoute, useRouter } from 'vue-router';
 
-import { createSubscription, getSubscriptionDetail, updateSubscription } from '../apis/subscription';
-import { useSubscriptionStore } from '../stores/subscription.ts';
+import { createSubscription, getSubscriptionDetail, updateSubscription } from '../../apis/subscription.ts';
 
 const route = useRoute();
 const router = useRouter();
-
-const subscriptionStore = useSubscriptionStore();
 
 const { runAsync: startCreateSubscription, loading: loadingCreateSubscription } = useRequest(createSubscription, {
   manual: true,
@@ -78,13 +75,14 @@ const handleSubmit = async () => {
         userAgent: formState.userAgent,
       });
       showNotify({ message: '更新订阅成功', type: 'success' });
+      await router.replace('/');
       return;
     }
     await startCreateSubscription(formState);
     showNotify({ message: '新建订阅成功', type: 'success' });
-  } finally {
     await router.replace('/');
-    await subscriptionStore.update();
+  } catch (e) {
+    showNotify({ message: '操作失败，请检查服务端配置', type: 'danger' });
   }
 };
 

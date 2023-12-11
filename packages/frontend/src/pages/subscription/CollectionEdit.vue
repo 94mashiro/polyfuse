@@ -32,13 +32,11 @@ import { computed, onMounted, reactive } from 'vue';
 import { useRequest } from 'vue-request';
 import { useRoute, useRouter } from 'vue-router';
 
-import { createCollection, getCollectionDetail, updateCollection } from '../apis/collection.ts';
-import SubscriptionCellCheckbox from '../components/SubscriptionCellCheckbox.vue';
-import { useCollectionStore } from '../stores/collection.ts';
+import { createCollection, getCollectionDetail, updateCollection } from '../../apis/collection.ts';
+import SubscriptionCellCheckbox from '../../components/SubscriptionCellCheckbox.vue';
 
 const route = useRoute();
 const router = useRouter();
-const collectionStore = useCollectionStore();
 
 const { runAsync: startCreateCollection, loading: loadingCreateCollection } = useRequest(createCollection, {
   manual: true,
@@ -66,13 +64,14 @@ const handleSubmit = async () => {
         subIds: formState.subIds,
       });
       showNotify({ message: '编辑订阅组成功', type: 'success' });
+      await router.replace('/');
       return;
     }
     await startCreateCollection(formState);
-    showNotify({ message: '新建订阅组成功', type: 'success' });
-  } finally {
     await router.replace('/');
-    await collectionStore.update();
+    showNotify({ message: '新建订阅组成功', type: 'success' });
+  } catch (e: any) {
+    showNotify({ message: '操作失败，请检查服务端配置', type: 'danger' });
   }
 };
 
