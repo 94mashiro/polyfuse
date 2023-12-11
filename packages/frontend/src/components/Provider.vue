@@ -25,6 +25,7 @@ import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useUpdateVersion } from '../hooks/useUpdateVersion';
+import { initEndpointSetting } from '../utils/setting.ts';
 import BottomMenu from './BottomMenu.vue';
 import EndpointSettingNotice from './EndpointSettingNotice.vue';
 import NavBar from './NavBar.vue';
@@ -36,6 +37,7 @@ const themeVars = reactive({});
 const { update } = useUpdateVersion();
 
 onMounted(() => {
+  initEndpointSetting();
   update();
 });
 </script>

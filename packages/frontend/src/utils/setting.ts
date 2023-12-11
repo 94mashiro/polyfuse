@@ -27,3 +27,13 @@ export const setServerEndpointSetting = (setting: ServerEndpointSetting) => {
   const payload = JSON.stringify(setting);
   window.localStorage.setItem('Polyfuze:ServerEndpointSetting', payload);
 };
+
+export const initEndpointSetting = () => {
+  const { url } = getServerEndpointSetting();
+  if (!url) {
+    setServerEndpointSetting({
+      url: window.location.origin,
+      token: '',
+    });
+  }
+};
