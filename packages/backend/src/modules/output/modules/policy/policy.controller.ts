@@ -1,10 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { flattenDeep } from 'lodash';
 
-import { CollectionService } from '@/modules/manage/modules/collection/collection.service';
-import { SubscriptionService } from '@/modules/manage/modules/subscription/subscription.service';
-import { PolymorphicService } from '@/modules/worker/modules/polymorphic/polymorphic.service';
-
+import { CollectionService } from '../../../manage/modules/collection/collection.service';
+import { SubscriptionService } from '../../../manage/modules/subscription/subscription.service';
+import { PolymorphicService } from '../../../worker/modules/polymorphic/polymorphic.service';
 import { GetOutputPolicyDto } from './policy.dto';
 
 @Controller('output/policy')

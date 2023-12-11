@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { DrizzleModule } from '@/modules/drizzle/drizzle.module';
-import { PolymorphicModule } from '@/modules/worker/modules/polymorphic/polymorphic.module';
-
+import { DrizzleModule } from '../../../drizzle/drizzle.module';
+import { PolymorphicModule } from '../../../worker/modules/polymorphic/polymorphic.module';
 import { SubscriptionController } from './subscription.controller';
 import { SubscriptionService } from './subscription.service';
 

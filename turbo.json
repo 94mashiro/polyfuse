@@ -5,9 +5,13 @@
       "cache": false,
       "persistent": true
     },
-    "migrate": {
-      "cache": false,
-      "persistent": true
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "dotEnv": [".env"]
+    },
+    "start": {
+      "dependsOn": ["^build"]
     }
   }
 }

@@ -2,7 +2,7 @@ import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_GUARD, Reflector } from '@nestjs/core';
-import type { Request } from 'express';
+import { FastifyRequest } from 'fastify';
 
 import { IS_PUBLIC_KEY } from './auth.decorator';
 
@@ -28,8 +28,8 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromQuery(request: Request): string | undefined {
-    return request.query.token as string | undefined;
+  private extractTokenFromQuery(request: FastifyRequest): string | undefined {
+    return (request.query as any).token as string | undefined;
   }
 }
 

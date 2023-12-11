@@ -9,7 +9,7 @@ import './styles/base.css';
 
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
 import App from './App.vue';
 import RulePage from './pages/Rule.vue';
@@ -59,7 +59,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 const pinia = createPinia();

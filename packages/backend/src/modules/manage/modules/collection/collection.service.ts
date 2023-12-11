@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 
-import { DrizzleAsyncProvider, DrizzleDB } from '@/modules/drizzle/drizzle.provider';
-import { collections, subscriptionsToCollections } from '@/modules/drizzle/schema';
+import { DrizzleAsyncProvider, DrizzleDB } from '../../../drizzle/drizzle.provider';
+import { collections, subscriptionsToCollections } from '../../../drizzle/schema';
 
 @Injectable()
 export class CollectionService {

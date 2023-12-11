@@ -1,4 +1,4 @@
-import { Node, NodeProtocol } from '@/types/node';
+import { Node, NodeProtocol } from '../types/node';
 
 const getQuantumultXProtocol = (data: Node) => {
   const protocolMap = {

@@ -19,9 +19,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": false,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "resolveJsonModule": true
   }
 }

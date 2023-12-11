@@ -6,10 +6,12 @@
   "license": "ISC",
   "author": "",
   "scripts": {
+    "build": "npx turbo run build",
     "dev": "npx turbo run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "start": "npx turbo run start"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

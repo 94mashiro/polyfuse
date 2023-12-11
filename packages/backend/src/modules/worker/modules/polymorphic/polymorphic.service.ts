@@ -2,11 +2,11 @@ import { HttpException, Injectable } from '@nestjs/common';
 import parseUrl from 'parse-url';
 import { stringify } from 'yaml';
 
-import { Client } from '@/types/client';
-import { Node, NodeProtocol } from '@/types/node';
-import { SubscriptionFormat } from '@/types/subscription';
-import { parseShadowsocksPlugin } from '@/utils/node';
-import { getClashPolicyString, getQuantumultXPolicyString, getSurgePolicyString } from '@/utils/policy';
+import { Client } from '../../../../types/client';
+import { Node, NodeProtocol } from '../../../../types/node';
+import { SubscriptionFormat } from '../../../../types/subscription';
+import { parseShadowsocksPlugin } from '../../../../utils/node';
+import { getClashPolicyString, getQuantumultXPolicyString, getSurgePolicyString } from '../../../../utils/policy';
 
 @Injectable()
 export class PolymorphicService {

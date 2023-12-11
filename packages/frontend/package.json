@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vue-tsc && vite build",
     "dev": "vite --host",
+    "postinstall": "npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
