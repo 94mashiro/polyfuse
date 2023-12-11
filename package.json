@@ -7,7 +7,6 @@
   "author": "",
   "scripts": {
     "dev": "npx turbo run dev",
-    "postinstall": "npx turbo run migrate --filter=@polyfuse/backend",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "simple-git-hooks"
