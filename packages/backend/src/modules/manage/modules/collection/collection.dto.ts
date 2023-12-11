@@ -23,3 +23,8 @@ export class UpdateCollectionDto {
   @IsArray()
   subIds: string[];
 }
+
+export class DeleteCollectionDto {
+  @IsString()
+  id: string;
+}

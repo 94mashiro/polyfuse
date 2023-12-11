@@ -1,11 +1,11 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { eq } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 
 import { DrizzleAsyncProvider, DrizzleDB } from '@/modules/drizzle/drizzle.provider';
 import { subscriptions } from '@/modules/drizzle/schema';
 import { Client } from '@/types/client';
-import { SubscriptionProtocol } from '@/types/subscription';
+import { SubscriptionFormat } from '@/types/subscription';
 import { isBase64String } from '@/utils/base64';
 import { getClientUserAgent } from '@/utils/client';
 import { parseSubscriptionRawMetadata } from '@/utils/subscription-metadata';
@@ -21,7 +21,7 @@ export class SubscriptionService {
   }
 
   async listSubscriptions() {
-    return this.db.query.subscriptions.findMany();
+    return this.db.query.subscriptions.findMany({ orderBy: [asc(subscriptions.createdAt)] });
   }
 
   async addSubscription(body: CreateSubscriptionDto) {
@@ -70,7 +70,7 @@ export class SubscriptionService {
 
   getSubscriptionProtocol(data: string) {
     if (isBase64String(data)) {
-      return SubscriptionProtocol.Shadowsocks;
+      return SubscriptionFormat.SIP002;
     }
     throw new HttpException('Unsupported subscription protocol', 400);
   }
@@ -84,5 +84,9 @@ export class SubscriptionService {
         userAgent: params.userAgent,
       })
       .where(eq(subscriptions.id, params.id));
+  }
+
+  deleteSubscription(params: { id: string }) {
+    return this.db.delete(subscriptions).where(eq(subscriptions.id, params.id));
   }
 }

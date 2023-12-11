@@ -26,8 +26,9 @@
         type="primary"
         native-type="submit"
         :loading="loadingCreateSubscription || loadingUpdateSubscription"
-        >提交</van-button
       >
+        提交
+      </van-button>
     </div>
   </van-form>
 </template>
@@ -77,13 +78,12 @@ const handleSubmit = async () => {
         userAgent: formState.userAgent,
       });
       showNotify({ message: '更新订阅成功', type: 'success' });
-      await router.replace('/');
       return;
     }
     await startCreateSubscription(formState);
     showNotify({ message: '新建订阅成功', type: 'success' });
-    await router.replace('/');
   } finally {
+    await router.replace('/');
     await subscriptionStore.update();
   }
 };

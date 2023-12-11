@@ -19,8 +19,9 @@
         type="primary"
         native-type="submit"
         :loading="loadingCreateCollection || loadingUpdateCollection"
-        >提交</van-button
       >
+        提交
+      </van-button>
     </div>
   </van-form>
 </template>
@@ -33,9 +34,11 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { createCollection, getCollectionDetail, updateCollection } from '../apis/collection.ts';
 import SubscriptionCellCheckbox from '../components/SubscriptionCellCheckbox.vue';
+import { useCollectionStore } from '../stores/collection.ts';
 
 const route = useRoute();
 const router = useRouter();
+const collectionStore = useCollectionStore();
 
 const { runAsync: startCreateCollection, loading: loadingCreateCollection } = useRequest(createCollection, {
   manual: true,
@@ -55,19 +58,22 @@ const formState = reactive({
 const isEditMode = computed(() => route.name === 'CollectionEditPage');
 
 const handleSubmit = async () => {
-  if (isEditMode.value) {
-    await startUpdateCollection({
-      id: route.params.id as string,
-      name: formState.name,
-      subIds: formState.subIds,
-    });
-    showNotify({ message: '编辑订阅组成功', type: 'success' });
+  try {
+    if (isEditMode.value) {
+      await startUpdateCollection({
+        id: route.params.id as string,
+        name: formState.name,
+        subIds: formState.subIds,
+      });
+      showNotify({ message: '编辑订阅组成功', type: 'success' });
+      return;
+    }
+    await startCreateCollection(formState);
+    showNotify({ message: '新建订阅组成功', type: 'success' });
+  } finally {
     await router.replace('/');
-    return;
+    await collectionStore.update();
   }
-  await startCreateCollection(formState);
-  showNotify({ message: '新建订阅组成功', type: 'success' });
-  await router.replace('/');
 };
 
 onMounted(async () => {

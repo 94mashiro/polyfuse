@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 
-import { CreateCollectionDto, GetCollectionDetailDto, UpdateCollectionDto } from './collection.dto';
+import {
+  CreateCollectionDto,
+  DeleteCollectionDto,
+  GetCollectionDetailDto,
+  UpdateCollectionDto,
+} from './collection.dto';
 import { CollectionService } from './collection.service';
 
 @Controller('collection')
@@ -26,6 +31,12 @@ export class CollectionController {
   @Post('update')
   async updateCollection(@Body() body: UpdateCollectionDto) {
     await this.collectionService.updateCollection(body);
+    return true;
+  }
+
+  @Post('delete')
+  async deleteCollection(@Body() body: DeleteCollectionDto) {
+    await this.collectionService.deleteCollection(body);
     return true;
   }
 }

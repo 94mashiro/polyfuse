@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 
 import {
   CreateSubscriptionDto,
+  DeleteSubscriptionDto,
   GetSubscriptionDetailDto,
   GetSubscriptionMetadataDto,
   UpdateSubscriptionDto,
@@ -35,6 +36,12 @@ export class SubscriptionController {
   @Post('update')
   async updateSubscription(@Body() body: UpdateSubscriptionDto) {
     await this.subscriptionService.updateSubscription(body);
+    return true;
+  }
+
+  @Post('delete')
+  async deleteSubscription(@Body() body: DeleteSubscriptionDto) {
+    await this.subscriptionService.deleteSubscription(body);
     return true;
   }
 }

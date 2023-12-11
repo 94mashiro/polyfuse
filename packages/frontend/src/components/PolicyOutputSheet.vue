@@ -39,7 +39,12 @@ const options: ShareOption[] = [
   {
     name: 'Quantumult X',
     icon: '/logo/qx.png',
-    client: 'quantumult_x',
+    client: 'qx',
+  },
+  {
+    name: 'Clash',
+    icon: '/logo/clash.png',
+    client: 'clash',
   },
   {
     name: 'Clash Meta',
@@ -52,9 +57,9 @@ const options: ShareOption[] = [
     client: 'surge',
   },
   {
-    name: 'Clash',
+    name: 'Stash',
     icon: '/logo/stash.png',
-    client: 'clash',
+    client: 'stash',
   },
 ];
 

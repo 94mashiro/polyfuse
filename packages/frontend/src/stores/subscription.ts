@@ -21,7 +21,9 @@ export const useSubscriptionStore = defineStore('subscription', {
       const { runAsync } = useRequest(getSubscriptionList, {
         manual: true,
       });
-      this.loadingSubscriptions = true;
+      if (this.subscriptions.length === 0) {
+        this.loadingSubscriptions = true;
+      }
       this.subscriptions = await runAsync();
       this.loadingSubscriptions = false;
     },

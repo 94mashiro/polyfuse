@@ -24,6 +24,10 @@ interface UpdateSubscriptionBody {
   userAgent?: string;
 }
 
+interface DeleteSubscriptionBody {
+  id: string;
+}
+
 export const getSubscriptionList = () => get<SubscriptionListRes>('/api/subscription/list');
 
 export const getSubscriptionDetail = (query: SubscriptionDetailQuery) =>
@@ -39,3 +43,5 @@ export const getSubscriptionMetadata = (query: SubscriptionMetadataQuery) =>
 export const createSubscription = (body: CreateSubscriptionBody) => post<boolean>('/api/subscription/create', body);
 
 export const updateSubscription = (body: UpdateSubscriptionBody) => post<boolean>('/api/subscription/update', body);
+
+export const deleteSubscription = (body: DeleteSubscriptionBody) => post<boolean>('/api/subscription/delete', body);

@@ -36,3 +36,8 @@ export class UpdateSubscriptionDto {
   @IsOptional()
   userAgent?: string;
 }
+
+export class DeleteSubscriptionDto {
+  @IsString()
+  id: string;
+}

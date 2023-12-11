@@ -16,6 +16,10 @@ interface UpdateCollectionBody extends CreateCollectionBody {
   id: string;
 }
 
+interface DeleteCollectionBody {
+  id: string;
+}
+
 export const getCollectionList = () => get<GetCollectionListRes>('/api/collection/list');
 
 export const createCollection = (body: CreateCollectionBody) => post('/api/collection/create', body);
@@ -26,3 +30,5 @@ export const getCollectionDetail = (query: GetCollectionDetailQuery) =>
   });
 
 export const updateCollection = (body: UpdateCollectionBody) => post('/api/collection/update', body);
+
+export const deleteCollection = (body: DeleteCollectionBody) => post('/api/collection/delete', body);

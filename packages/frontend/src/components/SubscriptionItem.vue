@@ -2,7 +2,7 @@
   <van-cell class="item" center :title="item.name">
     <template #label>
       <div class="text-xs">
-        <div v-if="loading">加载中...</div>
+        <div v-if="loading && !metadata">加载中...</div>
         <div v-else class="flex flex-col gap-0.5">
           <div class="flex items-center gap-1">
             <div class="i-mdi:speedometer" />
@@ -19,6 +19,7 @@
       <div class="flex w-full justify-end gap-2">
         <PolicyOutputSheet :id="item.id" type="subscription" />
         <div class="i-mdi:pencil" @click="handleNavEditPage" />
+        <SubscriptionDeleteDialog :id="item.id" type="subscription" />
       </div>
     </template>
   </van-cell>
@@ -27,13 +28,15 @@
 <script setup lang="ts">
 import byteSize from 'byte-size';
 import { format } from 'date-fns';
-import { computed, PropType } from 'vue';
+import { computed, onMounted, PropType } from 'vue';
 import { useRequest } from 'vue-request';
 import { useRouter } from 'vue-router';
 
 import { getSubscriptionMetadata } from '../apis/subscription';
+import { useSubscriptionStore } from '../stores/subscription.ts';
 import { Subscription } from '../types/subscription';
 import PolicyOutputSheet from './PolicyOutputSheet.vue';
+import SubscriptionDeleteDialog from './SubscriptionDeleteDialog.vue';
 
 const props = defineProps({
   item: {
@@ -43,8 +46,13 @@ const props = defineProps({
 });
 
 const router = useRouter();
+const subscriptionStore = useSubscriptionStore();
 
-const { data: metadata, loading } = useRequest(() => getSubscriptionMetadata({ id: props.item.id }));
+const { loading, runAsync } = useRequest(getSubscriptionMetadata, {
+  manual: true,
+});
+
+const metadata = computed(() => subscriptionStore.subMetadata[props.item.id]);
 
 const metadataInfo = computed(() => {
   let traffic = '';
@@ -68,6 +76,13 @@ const metadataInfo = computed(() => {
 const handleNavEditPage = () => {
   router.replace(`/subscription/edit/${props.item.id}`);
 };
+
+onMounted(async () => {
+  const metadata = await runAsync({
+    id: props.item.id,
+  });
+  subscriptionStore.subMetadata[props.item.id] = metadata;
+});
 </script>
 
 <style scoped lang="scss">

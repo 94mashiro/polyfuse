@@ -63,4 +63,11 @@ export class CollectionService {
       );
     });
   }
+
+  async deleteCollection(params: { id: string }) {
+    await this.db.transaction(async db => {
+      await db.delete(subscriptionsToCollections).where(eq(subscriptionsToCollections.collectionId, params.id));
+      await db.delete(collections).where(eq(collections.id, params.id));
+    });
+  }
 }

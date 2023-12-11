@@ -53,6 +53,7 @@
     "drizzle-orm": "^0.29.1",
     "fastify": "^4.24.3",
     "lodash": "^4.17.21",
+    "parse-url": "^8.1.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.1",

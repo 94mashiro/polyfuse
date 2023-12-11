@@ -9,6 +9,7 @@
       <div class="flex w-full justify-end gap-2">
         <PolicyOutputSheet :id="item.id" type="collection" />
         <div class="i-mdi:pencil" @click="handleNavEditPage" />
+        <SubscriptionDeleteDialog :id="item.id" type="collection" />
       </div>
     </template>
   </van-cell>
