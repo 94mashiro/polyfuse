@@ -51,7 +51,7 @@ export class SubscriptionService {
     return axios
       .get<string>(url, {
         headers: {
-          'User-Agent': userAgent || getClientUserAgent(Client.Shadowrocket),
+          'User-Agent': userAgent || getClientUserAgent(Client.Browser),
         },
       })
       .then(res => res.data);

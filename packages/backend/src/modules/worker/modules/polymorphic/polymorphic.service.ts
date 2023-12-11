@@ -71,13 +71,16 @@ export class PolymorphicService {
     const parseUri = (uri: string) => {
       try {
         const parsedUri = parseUrl(uri);
+        console.log(parsedUri);
         if (parsedUri.protocol === 'ss') {
           return getShadowsocksNode(parsedUri);
         }
         if (parsedUri.protocol === 'trojan') {
           return getTrojanNode(parsedUri);
         }
-      } catch {}
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     return decodedUriList.map(parseUri).filter(Boolean);

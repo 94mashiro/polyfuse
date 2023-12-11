@@ -6,4 +6,5 @@ export enum Client {
   QuantumultX = 'qx',
   Shadowsocks = 'shadowsocks',
   Stash = 'stash',
+  Browser = 'browser',
 }
