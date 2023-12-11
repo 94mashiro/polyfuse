@@ -5,11 +5,13 @@ export enum NodeProtocol {
 export interface ShadowsocksNode {
   type: NodeProtocol.Shadowsocks;
   data: {
-    method: string;
+    cipher: string;
     password: string;
     host: string;
     port: string;
     name: string;
+    plugin?: string;
+    pluginOptions?: Record<string, string>;
   };
 }
 

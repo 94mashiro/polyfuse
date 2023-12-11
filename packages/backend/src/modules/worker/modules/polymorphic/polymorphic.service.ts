@@ -4,6 +4,7 @@ import { stringify } from 'yaml';
 import { ClashPolicy, Client, QuantumultXPolicy, SurgePolicy } from '@/types/client';
 import { Node, NodeProtocol, ShadowsocksNode } from '@/types/node';
 import { SubscriptionProtocol } from '@/types/subscription';
+import { parseShadowsocksPlugin } from '@/utils/node';
 import { getQuantumultXPolicyString, getSurgePolicyString } from '@/utils/policy';
 
 @Injectable()
@@ -31,27 +32,28 @@ export class PolymorphicService {
   }
 
   parseShadowsocks(data: string): ShadowsocksNode[] {
-    const decodedUriList = decodeURIComponent(atob(data)).split('\r\n');
+    const decodedData = decodeURIComponent(atob(data));
+    const splitSeparator = decodedData.includes('\r\n') ? '\r\n' : '\n';
+    const decodedUriList = decodeURIComponent(atob(data)).split(splitSeparator);
     const parseUri = (uri: string) => {
-      // 根据 ss 协议的模式，解析出各个部分
-      const parseRegex = /ss:\/\/(.+)@(.+):(\d+)#(.+)/g;
-      const matchParts = parseRegex.exec(uri);
-      if (!matchParts) {
-        return null;
-      }
-      // encodedData 部分需要二次 decode
-      const [_, encodedData, host, port, name] = matchParts;
-      const [method, password] = atob(encodedData).split(':');
-      return {
-        type: NodeProtocol.Shadowsocks,
-        data: {
-          method,
-          password,
-          host,
-          port,
-          name,
-        },
-      };
+      try {
+        const parsedUri = new URL(uri);
+        const pluginQuery = parsedUri.searchParams.get('plugin');
+        const { plugin, pluginOptions } = parseShadowsocksPlugin(pluginQuery);
+        const [cipher, password] = atob(parsedUri.username).split(':');
+        return {
+          type: NodeProtocol.Shadowsocks,
+          data: {
+            host: parsedUri.hostname,
+            port: parsedUri.port,
+            name: decodeURIComponent(parsedUri.hash.slice(1)),
+            cipher,
+            password,
+            plugin,
+            pluginOptions,
+          },
+        };
+      } catch {}
     };
     return decodedUriList.map(parseUri).filter(Boolean);
   }
@@ -63,11 +65,12 @@ export class PolymorphicService {
           const policyData: QuantumultXPolicy = {
             host: data.host,
             port: data.port,
-            method: data.method,
+            cipher: data.cipher,
             protocol: 'shadowsocks',
             password: data.password,
-            udpRelay: true,
             tag: data.name,
+            plugin: data.plugin,
+            pluginOptions: data.pluginOptions,
           };
           return getQuantumultXPolicyString(policyData);
         }
@@ -86,11 +89,12 @@ export class PolymorphicService {
           const policyData: SurgePolicy = {
             host: data.host,
             port: data.port,
-            method: data.method,
+            cipher: data.cipher,
             protocol: 'ss',
             password: data.password,
-            udpRelay: true,
             tag: data.name,
+            plugin: data.plugin,
+            pluginOptions: data.pluginOptions,
           };
           return getSurgePolicyString(policyData);
         }
@@ -111,7 +115,7 @@ export class PolymorphicService {
             type: 'ss',
             server: data.host,
             port: Number(data.port),
-            cipher: data.method,
+            cipher: data.cipher,
             password: data.password,
             udp: true,
           };

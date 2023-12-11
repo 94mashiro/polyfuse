@@ -4,7 +4,11 @@ import Provider from './components/Provider.vue';
 
 <template>
   <Provider>
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <KeepAlive>
+        <component :is="Component" />
+      </KeepAlive>
+    </RouterView>
   </Provider>
 </template>
 

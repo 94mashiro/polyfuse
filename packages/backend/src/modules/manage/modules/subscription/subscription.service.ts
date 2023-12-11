@@ -52,7 +52,7 @@ export class SubscriptionService {
     return axios
       .get<string>(url, {
         headers: {
-          'User-Agent': userAgent,
+          'User-Agent': userAgent || getClientUserAgent(Client.Shadowrocket),
         },
       })
       .then(res => res.data);
@@ -81,7 +81,7 @@ export class SubscriptionService {
       .set({
         name: params.name,
         url: params.url,
-        userAgent: params.url,
+        userAgent: params.userAgent,
       })
       .where(eq(subscriptions.id, params.id));
   }
