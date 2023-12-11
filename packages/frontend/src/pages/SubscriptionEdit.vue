@@ -39,9 +39,12 @@ import { useRequest } from 'vue-request';
 import { useRoute, useRouter } from 'vue-router';
 
 import { createSubscription, getSubscriptionDetail, updateSubscription } from '../apis/subscription';
+import { useSubscriptionStore } from '../stores/subscription.ts';
 
 const route = useRoute();
 const router = useRouter();
+
+const subscriptionStore = useSubscriptionStore();
 
 const { runAsync: startCreateSubscription, loading: loadingCreateSubscription } = useRequest(createSubscription, {
   manual: true,
@@ -65,20 +68,24 @@ const formState = reactive({
 const isEditMode = computed(() => route.name === 'SubscriptionEditPage');
 
 const handleSubmit = async () => {
-  if (isEditMode.value) {
-    await startUpdateSubscription({
-      id: route.params.id as string,
-      name: formState.name,
-      url: formState.url,
-      userAgent: formState.userAgent,
-    });
-    showNotify({ message: '更新订阅成功', type: 'success' });
+  try {
+    if (isEditMode.value) {
+      await startUpdateSubscription({
+        id: route.params.id as string,
+        name: formState.name,
+        url: formState.url,
+        userAgent: formState.userAgent,
+      });
+      showNotify({ message: '更新订阅成功', type: 'success' });
+      await router.replace('/');
+      return;
+    }
+    await startCreateSubscription(formState);
+    showNotify({ message: '新建订阅成功', type: 'success' });
     await router.replace('/');
-    return;
+  } finally {
+    await subscriptionStore.update();
   }
-  await startCreateSubscription(formState);
-  showNotify({ message: '新建订阅成功', type: 'success' });
-  await router.replace('/');
 };
 
 onMounted(async () => {
